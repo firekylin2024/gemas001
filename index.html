@@ -1,59 +1,405 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Play Fast Food Rush Online | GamesLife.space</title>
-    <meta name="description" content="Dive into the fast-paced world of Fast Food Rush – right in your browser at GamesLife.space. Enjoy fun, fast, free gameplay on desktop or mobile!" />
-    <link rel="canonical" href="https://gameslife.space/" />
-    <link rel="icon" href="/favicon.ico" />
-    <script src="https://cdn.tailwindcss.com"></script>
-  </head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameLife Space - Play Fun Online Games for Free</title>
+    <meta name="description" content="Discover and play free online games at GameLife Space. Enjoy a collection of fun games including Fast Food Rush and 2048.">
+    <link rel="canonical" href="https://gameslife.space/index.html">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <style>
+        :root {
+            --apple-blue: #007AFF;
+            --apple-red: #FF3B30;
+            --apple-gray: #8E8E93;
+            --apple-light-gray: #F2F2F7;
+            --apple-dark-gray: #1C1C1E;
+            --apple-green: #34C759;
+        }
 
-  <body class="bg-white text-gray-800 font-sans leading-relaxed">
-    <header class="bg-gray-100 border-b border-gray-200 shadow-sm p-4 md:p-6">
-      <div class="max-w-4xl mx-auto text-center">
-        <h1 class="text-3xl md:text-4xl font-bold text-blue-600">Play Fast Food Rush Online on GamesLife.space</h1>
-        <h2 class="mt-2 text-lg md:text-xl text-gray-600">Dive into the fast-paced world of Fast Food Rush – right in your browser!</h2>
-      </div>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--apple-light-gray);
+            color: var(--apple-dark-gray);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background-color: var(--apple-blue);
+            color: white;
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            text-decoration: none;
+            color: white;
+        }
+
+        .game-icon {
+            margin-right: 8px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 20px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.3s;
+        }
+
+        nav ul li a:hover {
+            opacity: 0.8;
+        }
+
+        .language-selector {
+            margin-left: 20px;
+            padding: 5px 10px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 60px 0;
+            background-color: white;
+            border-radius: 12px;
+            margin: 20px 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: var(--apple-dark-gray);
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: var(--apple-gray);
+            margin-bottom: 30px;
+        }
+
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .game-card {
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .game-img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            background-color: var(--apple-light-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--apple-gray);
+        }
+
+        .game-img-placeholder {
+            font-size: 50px;
+        }
+
+        .game-info {
+            padding: 20px;
+        }
+
+        h2 {
+            font-size: 22px;
+            margin-bottom: 10px;
+            color: var(--apple-dark-gray);
+        }
+
+        .game-desc {
+            font-size: 14px;
+            color: var(--apple-gray);
+            margin-bottom: 20px;
+        }
+
+        .play-btn {
+            display: inline-block;
+            background-color: var(--apple-blue);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+
+        .play-btn:hover {
+            background-color: #0056b3;
+        }
+
+        footer {
+            background-color: var(--apple-dark-gray);
+            color: white;
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 60px;
+        }
+
+        .footer-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        .footer-links a:hover {
+            opacity: 0.8;
+        }
+
+        .copyright {
+            margin-top: 20px;
+            color: var(--apple-gray);
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+                position: absolute;
+                right: 20px;
+                top: 20px;
+            }
+
+            nav {
+                width: 100%;
+                display: none;
+                margin-top: 20px;
+            }
+
+            nav.active {
+                display: block;
+            }
+
+            nav ul {
+                flex-direction: column;
+            }
+
+            nav ul li {
+                margin: 10px 0;
+            }
+
+            .game-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-container {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-gamepad game-icon"></i>
+                GameLife Space
+            </a>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav id="mainNav">
+                <ul>
+                    <li><a href="index.html" class="active">Home</a></li>
+                    <li><a href="fast-food-rush.html">Fast Food Rush</a></li>
+                    <li><a href="2048.html">2048</a></li>
+                    <li class="language-selector" id="langToggle">EN | 中文</li>
+                </ul>
+            </nav>
+        </div>
     </header>
 
-    <main class="max-w-4xl mx-auto px-4 md:px-6 py-6 space-y-6">
-      <section>
-        <h2 class="text-2xl font-semibold text-blue-500 mb-4">Play Now</h2>
-        <div class="aspect-w-16 aspect-h-9 rounded-xl overflow-hidden shadow-lg">
-          <iframe
-            src="https://cloud.onlinegames.io/games/2025/unity/fast-food-rush/index-og.html"
-            class="w-full h-[500px] md:h-[600px] rounded-xl border border-gray-300"
-            allowfullscreen
-            loading="lazy"
-            title="Fast Food Rush Game"
-          ></iframe>
-        </div>
-      </section>
+    <main class="container">
+        <section class="hero">
+            <h1>Welcome to GameLife Space</h1>
+            <p class="subtitle">Your destination for free online games that you can play right in your browser!</p>
+            <a href="#games" class="play-btn">Explore Games</a>
+        </section>
 
-      <section>
-        <h2 class="text-2xl font-semibold text-blue-500 mb-2">About the Game</h2>
-        <p class="text-gray-700">
-          Fast Food Rush is an exciting and addictive browser game where you manage a high-speed fast food kitchen.
-          Serve customers quickly, upgrade your equipment, and beat the clock. Whether you're on a PC or mobile,
-          the game runs smoothly and delivers non-stop fun with no downloads required.
-        </p>
-      </section>
+        <section id="games" class="game-grid">
+            <div class="game-card">
+                <div class="game-img">
+                    <i class="fas fa-hamburger game-img-placeholder"></i>
+                </div>
+                <div class="game-info">
+                    <h2>Fast Food Rush</h2>
+                    <p class="game-desc">Test your speed and reflexes in this exciting fast food service game. Can you keep up with the orders?</p>
+                    <a href="fast-food-rush.html" class="play-btn">Play Now</a>
+                </div>
+            </div>
 
-      <section>
-        <h2 class="text-2xl font-semibold text-blue-500 mb-2">Why Play on GamesLife.space?</h2>
-        <ul class="list-disc list-inside text-gray-700 space-y-1">
-          <li>100% free to play – no sign-up needed</li>
-          <li>Fast loading and mobile friendly</li>
-          <li>Safe and secure online gaming</li>
-          <li>Updated regularly with the latest hits</li>
-        </ul>
-      </section>
+            <div class="game-card">
+                <div class="game-img">
+                    <i class="fas fa-th game-img-placeholder"></i>
+                </div>
+                <div class="game-info">
+                    <h2>2048</h2>
+                    <p class="game-desc">Join the numbers and get to the 2048 tile! A simple yet addictive puzzle game that challenges your mind.</p>
+                    <a href="2048.html" class="play-btn">Play Now</a>
+                </div>
+            </div>
+
+            <div class="game-card">
+                <div class="game-img">
+                    <i class="fas fa-plus game-img-placeholder"></i>
+                </div>
+                <div class="game-info">
+                    <h2>More Games Coming Soon!</h2>
+                    <p class="game-desc">We're constantly adding new games to our collection. Stay tuned for more exciting titles!</p>
+                    <a href="javascript:void(0)" class="play-btn" style="background-color: var(--apple-gray);">Coming Soon</a>
+                </div>
+            </div>
+        </section>
     </main>
 
-    <footer class="bg-gray-50 text-center text-sm text-gray-500 py-6 mt-12 border-t border-gray-200">
-      © 2025 GamesLife.space — All rights reserved.
+    <footer>
+        <div class="container footer-container">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About Us</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <p class="copyright">© 2025 GameLife Space. All rights reserved.</p>
+        </div>
     </footer>
-  </body>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mainNav = document.getElementById('mainNav');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+        });
+
+        // Language toggle functionality
+        const langToggle = document.getElementById('langToggle');
+        let currentLang = 'en';
+
+        langToggle.addEventListener('click', () => {
+            if (currentLang === 'en') {
+                // Switch to Chinese
+                currentLang = 'cn';
+                langToggle.textContent = '中文 | EN';
+                translateToChinese();
+            } else {
+                // Switch to English
+                currentLang = 'en';
+                langToggle.textContent = 'EN | 中文';
+                translateToEnglish();
+            }
+        });
+
+        function translateToChinese() {
+            // Here we would normally use a translation API or a dictionary
+            // For demonstration, we'll just translate the main elements
+            document.querySelector('h1').textContent = '欢迎来到 GameLife Space';
+            document.querySelector('.subtitle').textContent = '您的免费在线游戏目的地，可以直接在浏览器中玩！';
+            document.querySelectorAll('.play-btn')[0].textContent = '探索游戏';
+            document.querySelectorAll('h2')[0].textContent = '快餐店冲刺';
+            document.querySelectorAll('.game-desc')[0].textContent = '在这个刺激的快餐服务游戏中测试您的速度和反应能力。您能跟上订单吗？';
+            document.querySelectorAll('.play-btn')[1].textContent = '立即玩';
+            document.querySelectorAll('h2')[1].textContent = '2048';
+            document.querySelectorAll('.game-desc')[1].textContent = '合并数字并达到2048格！一个简单但令人上瘾的益智游戏，挑战你的思维。';
+            document.querySelectorAll('.play-btn')[2].textContent = '立即玩';
+            document.querySelectorAll('h2')[2].textContent = '更多游戏即将推出！';
+            document.querySelectorAll('.game-desc')[2].textContent = '我们不断向我们的收藏添加新游戏。敬请期待更多精彩游戏！';
+            document.querySelectorAll('.play-btn')[3].textContent = '即将推出';
+        }
+
+        function translateToEnglish() {
+            document.querySelector('h1').textContent = 'Welcome to GameLife Space';
+            document.querySelector('.subtitle').textContent = 'Your destination for free online games that you can play right in your browser!';
+            document.querySelectorAll('.play-btn')[0].textContent = 'Explore Games';
+            document.querySelectorAll('h2')[0].textContent = 'Fast Food Rush';
+            document.querySelectorAll('.game-desc')[0].textContent = 'Test your speed and reflexes in this exciting fast food service game. Can you keep up with the orders?';
+            document.querySelectorAll('.play-btn')[1].textContent = 'Play Now';
+            document.querySelectorAll('h2')[1].textContent = '2048';
+            document.querySelectorAll('.game-desc')[1].textContent = 'Join the numbers and get to the 2048 tile! A simple yet addictive puzzle game that challenges your mind.';
+            document.querySelectorAll('.play-btn')[2].textContent = 'Play Now';
+            document.querySelectorAll('h2')[2].textContent = 'More Games Coming Soon!';
+            document.querySelectorAll('.game-desc')[2].textContent = "We're constantly adding new games to our collection. Stay tuned for more exciting titles!";
+            document.querySelectorAll('.play-btn')[3].textContent = 'Coming Soon';
+        }
+    </script>
+</body>
 </html>
