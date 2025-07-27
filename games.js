@@ -13,6 +13,12 @@ const games = [
     url: "2048-game-page.html"
   },
   {
+  title: "割绳子",
+  desc: "A physics-based puzzle game where you cut ropes to feed candy to Om Nom.",
+  img: "images/cuttherope.jpg",
+  url: "cut-the-rope-page.html"
+}
+  {
     title: "More Games Coming Soon!",
     desc: "We're constantly adding new games to our collection. Stay tuned!",
     img: "images/comingsoon.jpg",
