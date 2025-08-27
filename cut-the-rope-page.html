@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cut the Rope - GameLife Space</title>
   <meta name="description" content="Play Cut the Rope online for free. Feed candy to the cute little monster by cutting ropes in the right order!">
+  <script src="ai-helper.js"></script>
   <style>
     body {
       margin: 0;
@@ -22,7 +23,7 @@
     }
     .game-container {
       width: 100%;
-      height: calc(100vh - 60px);
+      height: 70vh;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -47,16 +48,158 @@
     .back-link:hover {
       background: rgba(0,0,0,0.7);
     }
+    .info-section {
+      padding: 20px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .info-section h2 {
+      color: #007AFF;
+      margin-bottom: 10px;
+    }
+    .info-section p {
+      margin-bottom: 15px;
+      line-height: 1.6;
+    }
+    .ad-space {
+      background: #e0e0e0;
+      padding: 20px;
+      text-align: center;
+      margin: 20px 0;
+      border-radius: 8px;
+    }
+    .ad-space p {
+      color: #666;
+      font-style: italic;
+    }
   </style>
 </head>
 <body>
   <header>
     Cut the Rope
-    <a href="index.html" class="back-link">← Back to Home</a>
+    <div style="display: flex; align-items: center; gap: 15px;">
+      <button id="aiHelperBtn" style="background: #28a745; color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 14px;">🤖 AI助手</button>
+      <a href="index.html" class="back-link">← Back to Home</a>
+    </div>
   </header>
 
   <div class="game-container">
     <iframe src="https://cbgamesdev.github.io/chilibowlflash/ctr/index.html" allowfullscreen></iframe>
   </div>
+
+  <div class="info-section">
+    <h2>How to Play Cut The Rope</h2>
+    <p>Cut The Rope is a physics-based puzzle game where you need to feed candy to the cute little monster Om Nom. Use your mouse or touch to cut ropes in the right order to guide the candy to Om Nom's mouth.</p>
+    
+    <h2>Game Controls</h2>
+    <p><strong>Desktop:</strong> Click and drag to cut ropes</p>
+    <p><strong>Mobile:</strong> Tap and drag to cut ropes</p>
+    <p><strong>Objective:</strong> Feed all candy to Om Nom to complete each level</p>
+
+    <div class="ad-space">
+      <p>Advertisement Space - Perfect for Google AdSense</p>
+    </div>
+
+    <h2>Tips & Strategy</h2>
+    <p>• Think about the order of cutting ropes - timing is crucial!</p>
+    <p>• Watch out for obstacles like spikes and bubbles</p>
+    <p>• Collect stars for bonus points when possible</p>
+    <p>• Some levels require multiple candy pieces - plan your moves carefully</p>
+  </div>
+
+  <!-- AI助手对话框 -->
+  <div id="aiDialog" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000;">
+    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 30px; border-radius: 12px; max-width: 500px; width: 90%; max-height: 80vh; overflow-y: auto;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h3 style="margin: 0; color: #007AFF;">🤖 Cut The Rope 助手</h3>
+        <button id="closeAiDialog" style="background: none; border: none; font-size: 24px; cursor: pointer; color: #666;">×</button>
+      </div>
+      
+      <div id="aiContent">
+        <p>您好！我是Cut The Rope游戏助手，可以帮您：</p>
+        <ul style="margin: 20px 0;">
+          <li>🎮 获取游戏攻略和技巧</li>
+          <li>💡 解答游戏相关问题</li>
+          <li>🔧 提供技术支持</li>
+        </ul>
+        
+        <div style="margin: 20px 0;">
+          <input type="text" id="aiQuestion" placeholder="请输入您的问题..." style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; margin-bottom: 10px;">
+          <button id="askAiBtn" style="background: #007AFF; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer;">发送</button>
+        </div>
+        
+        <div id="aiResponse" style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-top: 15px; display: none;">
+          <p id="aiResponseText"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // AI助手功能
+    const aiHelper = new GameAIHelper();
+    const aiDialog = document.getElementById('aiDialog');
+    const aiHelperBtn = document.getElementById('aiHelperBtn');
+    const closeAiDialog = document.getElementById('closeAiDialog');
+    const aiQuestion = document.getElementById('aiQuestion');
+    const askAiBtn = document.getElementById('askAiBtn');
+    const aiResponse = document.getElementById('aiResponse');
+    const aiResponseText = document.getElementById('aiResponseText');
+
+    // 打开AI助手
+    aiHelperBtn.addEventListener('click', () => {
+      aiDialog.style.display = 'block';
+    });
+
+    // 关闭AI助手
+    closeAiDialog.addEventListener('click', () => {
+      aiDialog.style.display = 'none';
+      aiResponse.style.display = 'none';
+      aiQuestion.value = '';
+    });
+
+    // 点击背景关闭
+    aiDialog.addEventListener('click', (e) => {
+      if (e.target === aiDialog) {
+        aiDialog.style.display = 'none';
+        aiResponse.style.display = 'none';
+        aiQuestion.value = '';
+      }
+    });
+
+    // 发送问题
+    function sendQuestion() {
+      const question = aiQuestion.value.trim();
+      if (!question) return;
+
+      let response = '';
+      
+      // 检查是否是游戏攻略请求
+      if (question.includes('攻略') || question.includes('技巧') || question.includes('怎么玩')) {
+        const tips = aiHelper.getGameTips('Cut The Rope');
+        response = `🎮 Cut The Rope 攻略：\n\n`;
+        response += `📋 游戏技巧：\n`;
+        tips.tips.forEach(tip => {
+          response += `• ${tip}\n`;
+        });
+        response += `\n💡 策略建议：\n${tips.strategy}`;
+      } else {
+        // 使用客服回答
+        response = aiHelper.getCustomerServiceResponse(question);
+      }
+
+      // 显示回答
+      aiResponseText.textContent = response;
+      aiResponse.style.display = 'block';
+      aiQuestion.value = '';
+    }
+
+    askAiBtn.addEventListener('click', sendQuestion);
+    aiQuestion.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        sendQuestion();
+      }
+    });
+  </script>
 </body>
 </html>
